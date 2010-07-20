@@ -2,6 +2,7 @@
 {
 	import org.flixel.*;
 	import com.tileisle.Displacement;
+	import com.gskinner.utils.Rnd;
 	
 	public class PlayState extends FlxState
 	{
@@ -12,6 +13,7 @@
 		
 		private var emitter:Displacement;
 		private var FxGroup:FXGroup;
+		private var grpBurst:FlxGroup;
 		
 		override public function create():void
 		{	
@@ -51,7 +53,7 @@
 			emitter.life = 2.5;
 			emitter.blobCount = 300;
 
-			FlxG.log(emitter.members.length);
+			//FlxG.log(emitter.members.length);
 			emitter.begin();
 			
 			FxGroup.add(emitter = new Displacement(FxGroup.FXBuffer, 380-32, 160));
@@ -66,13 +68,54 @@
 			emitter.life = 2.5;
 			emitter.blobCount = 300;
 
-			FlxG.log(emitter.members.length);
+			//FlxG.log(emitter.members.length);
 			emitter.begin();
 			
+			grpBurst = new FlxGroup;
+			FxGroup.add(grpBurst);
+			//for (var i:uint = 0; i < 30; i++)
+			//{
+				//grpBurst.add(new DisplaceBlob(grpBurst.FXBuffer, 0, 0, Rnd.integer(1, 8), Rnd.integer(1, 8), Rnd.float(0.1, 1.25), Rnd.integer(1, 3),Rnd.integer(1, 3)));
+			//}
+			
+			
+			FlxG.mouse.show();
 		}
 		
 		override public function update():void
 		{
+			
+			if (FlxG.mouse.justPressed())
+			{
+				FlxG.log(FlxG.mouse.x + ", " + FlxG.mouse.y);
+				var DB:DisplaceBlob;
+				var rndW:uint;
+				var rndH:uint;
+				for (var i:uint = 0; i < 30; i++)
+				{
+					rndW = Rnd.integer(1, 8);
+					rndH = Rnd.integer(1, 8);
+					
+					DB = grpBurst.getFirstAvail() as DisplaceBlob;
+					if (DB)
+					{
+						DB.rebuild(FlxG.mouse.x - (rndW / 2), FlxG.mouse.y - (rndH / 2), rndW, rndH, Rnd.float(0.1, 1.25), Rnd.integer(1, 3), Rnd.integer(1, 3));
+						
+					}
+					else
+						DB = grpBurst.add(new DisplaceBlob(FxGroup.FXBuffer, FlxG.mouse.x - (rndW / 2), FlxG.mouse.y - (rndH / 2), rndW, rndH, Rnd.float(0.1, 1.25), Rnd.integer(1, 3), Rnd.integer(1, 3)))  as DisplaceBlob;
+					
+					DB.angularVelocity = Rnd.integer(-360,360);
+					DB.velocity.x = Rnd.integer(-60, 60);
+					DB.velocity.y = Rnd.integer(-60, 60);
+					DB.alpha = Rnd.float(0.4, 1);
+					DB.exists = true;
+					DB.visible = true;
+					DB.dead = false;
+					DB.active = true;
+					FlxG.log(i + ": " + (FlxG.mouse.x - (rndW / 2)) + ", " + (FlxG.mouse.y - (rndH / 2)) + " " + DB.blobHeight + " x " + DB.blobWidth + " " + DB.velocity.x + ", " + DB.velocity.y);
+				}
+			}
 			super.update();
 		}
 		override public function preProcess():void
@@ -83,6 +126,7 @@
 		{
 			super.render();	
 			FxGroup.doRender();
+			//grpBurst.doRender();
 		}
 	}
 }
