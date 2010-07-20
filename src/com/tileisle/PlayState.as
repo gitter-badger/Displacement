@@ -13,7 +13,7 @@
 		
 		private var emitter:Displacement;
 		private var FxGroup:FXGroup;
-		private var grpBurst:FlxGroup;
+		private var mouseEmitter:Displacement;
 		
 		override public function create():void
 		{	
@@ -70,53 +70,29 @@
 
 			//FlxG.log(emitter.members.length);
 			emitter.begin();
+				
+			FxGroup.add(mouseEmitter = new Displacement(FxGroup.FXBuffer, 0, 0));
+			mouseEmitter.setSize(4, 4);
+			mouseEmitter.setXSpeed( -25, 25);
+			mouseEmitter.setYSpeed( -25, 25);
+			emitter.blobHeight = 16;
+			emitter.blobWidth = 16;
+			emitter.displaceAmtX = 3;
+			emitter.displaceAmtY = 3;
+			emitter.alpha = 0.8;
+			emitter.life = 4;
+			emitter.blobCount = 300;
 			
-			grpBurst = new FlxGroup;
-			FxGroup.add(grpBurst);
-			//for (var i:uint = 0; i < 30; i++)
-			//{
-				//grpBurst.add(new DisplaceBlob(grpBurst.FXBuffer, 0, 0, Rnd.integer(1, 8), Rnd.integer(1, 8), Rnd.float(0.1, 1.25), Rnd.integer(1, 3),Rnd.integer(1, 3)));
-			//}
-			
-			
+			mouseEmitter.begin();
 			FlxG.mouse.show();
 		}
 		
 		override public function update():void
 		{
-			
-			if (FlxG.mouse.justPressed())
-			{
-				FlxG.log(FlxG.mouse.x + ", " + FlxG.mouse.y);
-				var DB:DisplaceBlob;
-				var rndW:uint;
-				var rndH:uint;
-				for (var i:uint = 0; i < 30; i++)
-				{
-					rndW = Rnd.integer(1, 8);
-					rndH = Rnd.integer(1, 8);
-					
-					DB = grpBurst.getFirstAvail() as DisplaceBlob;
-					if (DB)
-					{
-						DB.rebuild(FlxG.mouse.x - (rndW / 2), FlxG.mouse.y - (rndH / 2), rndW, rndH, Rnd.float(0.1, 1.25), Rnd.integer(1, 3), Rnd.integer(1, 3));
-						
-					}
-					else
-						DB = grpBurst.add(new DisplaceBlob(FxGroup.FXBuffer, FlxG.mouse.x - (rndW / 2), FlxG.mouse.y - (rndH / 2), rndW, rndH, Rnd.float(0.1, 1.25), Rnd.integer(1, 3), Rnd.integer(1, 3)))  as DisplaceBlob;
-					
-					DB.angularVelocity = Rnd.integer(-360,360);
-					DB.velocity.x = Rnd.integer(-60, 60);
-					DB.velocity.y = Rnd.integer(-60, 60);
-					DB.alpha = Rnd.float(0.4, 1);
-					DB.exists = true;
-					DB.visible = true;
-					DB.dead = false;
-					DB.active = true;
-					FlxG.log(i + ": " + (FlxG.mouse.x - (rndW / 2)) + ", " + (FlxG.mouse.y - (rndH / 2)) + " " + DB.blobHeight + " x " + DB.blobWidth + " " + DB.velocity.x + ", " + DB.velocity.y);
-				}
-			}
 			super.update();
+			mouseEmitter.x = FlxG.mouse.x-2;
+			mouseEmitter.y = FlxG.mouse.y-2;
+			
 		}
 		override public function preProcess():void
 		{
@@ -126,7 +102,6 @@
 		{
 			super.render();	
 			FxGroup.doRender();
-			//grpBurst.doRender();
 		}
 	}
 }
