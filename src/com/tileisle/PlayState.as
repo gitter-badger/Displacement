@@ -4,6 +4,9 @@
 	import com.tileisle.Displacement;
 	import com.gskinner.utils.Rnd;
 	
+	/**
+	 * @author Ryan "Rybar" Malm, Tim "SeiferTim" Hely
+	 */
 	public class PlayState extends FlxState
 	{
 		[Embed(source = '../../assets/noisechecker.png')]private var ImgBG:Class;
@@ -76,8 +79,6 @@
 			emitter.alpha = .6;
 			emitter.life = 2.5;
 			emitter.blobCount = 300;
-
-			//FlxG.log(emitter.members.length);
 			emitter.begin();
 			
 			FxGroup.add(emitter = new Displacement(FxGroup.FXBuffer, 380-32, 160));
@@ -91,8 +92,6 @@
 			emitter.alpha = .6;
 			emitter.life = 2.5;
 			emitter.blobCount = 300;
-
-			//FlxG.log(emitter.members.length);
 			emitter.begin();
 				
 			

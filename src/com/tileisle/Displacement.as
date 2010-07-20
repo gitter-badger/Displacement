@@ -5,6 +5,8 @@ package com.tileisle
 	
 	/**
 	 * <code>Displacement</code> is an emitter setup to work specificicall with DisplaceBlobs.
+	 * 
+	 * @author Ryan "Rybar" Malm, Tim "SeiferTim" Hely
 	 */
 	public class Displacement extends FlxEmitter
 	{
@@ -52,32 +54,20 @@ package com.tileisle
 			setYSpeed(MinYSpeed, MaxYSpeed);
 			gravity = 0;
 			setBlobCount(_blobCount);
-			
-			
 		}
 		
+		/**
+		 * Use <code>setBlobCount</code> to set the number of blobs in your emitter. This will also rebuild it's buffer.
+		 * @param	Count	The number of blobs you want to have in your buffer.
+		 */
 		public function setBlobCount(Count:int):void
 		{
-			/*var w:Number = width;
-			var h:Number = height;
-			var l:Number = _life;
-			if (w < _blobSize.x) w = _blobSize.x;
-			if (h < _blobSize.y) h = _blobSize.y;
-			if (l < 0) l = 100;
-			var p2:Number = w * h;
-			var sp2:Number = _blobSize.x * _blobSize.y;
-			var areas:Number = p2 / sp2;
-			var numNeeded:uint = ((areas * 2) * l) * 6;
-			FlxG.log(numNeeded);
-			_blobCount = numNeeded;*/
 			members.length = 0;
 			var d:DisplaceBlob;
 			for (var e:uint = 0; e < Count; e++)
 			{
-				
 				add(d = new DisplaceBlob(_buffer,0, 0, _blobSize.x, _blobSize.y, _life, _displaceAmt.x, _displaceAmt.y));
 				d.exists = false;
-				
 			}
 		}
 		

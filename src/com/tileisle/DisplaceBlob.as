@@ -10,6 +10,8 @@
 	/**
 	 * <code>DisplaceBlob</code> is a <code>FlxSprite</code> object which copies from an area nearby to make a displacement effect.
 	 * Usually emitted from the <code>Displacement</code> object, they can be added directly to the stage for neat effects.
+	 * 
+	 * @author Ryan "Rybar" Malm, Tim "SeiferTim" Hely
 	 */
 	public class DisplaceBlob extends FlxSprite
 	{
