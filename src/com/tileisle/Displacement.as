@@ -4,7 +4,7 @@ package com.tileisle
 	import org.flixel.*;
 	
 	/**
-	 * <code>Displacement</code> is an emitter setup to work specificicall with DisplaceBlobs.
+	 * <code>Displacement</code> is an emitter setup to work specifically with DisplaceBlobs.
 	 * 
 	 * @author Ryan "Rybar" Malm, Tim "SeiferTim" Hely
 	 */
@@ -274,6 +274,35 @@ package com.tileisle
 			justEmitted = true;
 		}
 		
+		public function emitRing(X:int, Y:int, Velocity:Number):void
+		{
+				
+			for (var b:uint = 0; b < members.length; b++)
+			{
+				var blob:DisplaceBlob = members[b] as DisplaceBlob;
+				var angleIncrement:Number = 360 / members.length;
+				if (!blob) return;	
+				blob.visible = true;
+				blob.exists = true;
+				blob.active = true;
+				blob.alpha = _alpha;
+				blob.blobWidth = _blobSize.x;
+				blob.blobHeight = _blobSize.y;
+				blob.life = _life;
+				blob.displaceAmtX = _displaceAmt.x;
+				blob.displaceAmtY = _displaceAmt.y;
+				blob.x = X;
+				blob.y = Y;
+				blob.velocity.x = Math.sin(b*angleIncrement) * Velocity;
+				blob.velocity.y = Math.cos(b*angleIncrement) * Velocity;
+				blob.acceleration.y = gravity;
+				blob.drag.x = particleDrag.x;
+				blob.drag.y = particleDrag.y;
+				blob.onEmit();
+			}
+			
+			justEmitted = true;
+		}
 	}
 
 }
